@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ironweil | Scripter</title>
+    
+    <!-- Fonts: Indie Flower (Handwriting) and Courier Prime (Typewriter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Indie+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #080808;
+            --text: #e0e0e0;
+            --accent: #ffffff;
+            --dim: #666666;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Courier Prime', monospace; /* Typewriter style */
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- The Container --- */
+        .main-wrapper {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: 'Indie Flower', cursive; /* Handwriting style */
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--dim);
+            font-style: italic;
+        }
+
+        /* --- The Floating Lightbulb --- */
+        .lightbulb-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 150px;
+            height: 200px;
+            pointer-events: none; /* Lets you click through it */
+            z-index: 10;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* CSS Magic to remove white background and make lines white */
+        .lightbulb-img {
+            width: 100%;
+            height: auto;
+            /* 
+               1. Invert: Turns black lines to white, white bg to black.
+               2. Contrast: Sharpens the lines.
+               3. Mix-blend-mode: Lighten makes the black transparent against dark body.
+            */
+            filter: invert(1) contrast(1.5);
+            mix-blend-mode: lighten;
+            opacity: 0.9;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* --- Hand-Drawn Box Style --- */
+        .sketch-box {
+            border: 2px solid var(--accent);
+            /* Creates a wobbly, imperfect square shape */
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            padding: 30px;
+            margin-bottom: 50px;
+            position: relative;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .sketch-box:hover {
+            /* Wiggles slightly on hover */
+            border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .box-label {
+            position: absolute;
+            top: -18px;
+            left: 20px;
+            background-color: var(--bg);
+            padding: 0 15px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        /* --- Header --- */
+        header {
+            margin-top: 60px;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        /* --- Packing Pals Highlight --- */
+        .highlight-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--dim);
+            padding-left: 15px;
+        }
+
+        .play-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--bg);
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: transform 0.2s;
+        }
+
+        .play-button:hover {
+            transform: scale(1.02);
+            background: #cccccc;
+        }
+
+        /* --- Video Grid --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            border: 1px solid var(--dim);
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .video-wrapper iframe:hover {
+            opacity: 1;
+        }
+
+        .project-name {
+            margin-top: 10px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--dim);
+        }
+
+        /* --- Contact --- */
+        .discord-box {
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        .discord-code {
+            background: #222;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: #fff;
+            user-select: all;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .lightbulb-container {
+                width: 100px;
+                top: 0;
+                right: 0;
+            }
+            .video-grid { grid-template-columns: 1fr; }
+            .main-wrapper { padding: 20px; }
+            header { margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        
+        <!-- Floating Lightbulb Decoration -->
+        <div class="lightbulb-container">
+            <img src="https://ih1.redbubble.net/image.2196574956.9510/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" alt="Omori Lightbulb" class="lightbulb-img">
+        </div>
+
+        <header>
+            <h1>ironweil.</h1>
+            <div class="subtitle">Roblox Scripter (3 Years)</div>
+            <br>
+            <p style="max-width: 500px;">
+                I create systems that matter. Clean code, unique mechanics, and a focus on player experience.
+            </p>
+        </header>
+
+        <!-- Featured Project -->
+        <div class="sketch-box">
+            <div class="box-label">Current Project</div>
+            
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">PACKING PALS</h2>
+            <p class="highlight-text">
+                "please play my game, i spent years making this game, and have published it recently. would be great if you tested it. its heavy wip!!"
+            </p>
+            
+            <p style="font-size: 0.9rem; color: #888;">
+                Featuring custom systems and commissioned assets. A solo-led passion project.
+            </p>
+
+            <a href="https://www.roblox.com/games/73210807766831/packing-pals" target="_blank" class="play-button">
+                ▶ PLAY ON ROBLOX
+            </a>
+        </div>
+
+        <!-- Previous Work -->
+        <div class="sketch-box">
+            <div class="box-label">Archives</div>
+            
+            <div class="video-grid">
+                <!-- Drawing System -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Wa49eU0NNLQ" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="project-name">Drawing System</div>
+                </div>
+
+                <!-- NPC Pathfinding -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/SWnhuUcKv-Y" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="project-name">Pathfinding & Random Maze</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="sketch-box discord-box">
+            <div class="box-label">Contact Me</div>
+            <p>I am currently open for work.</p>
+            <br>
+            <p>Discord: <span class="discord-code">ironweil</span></p>
+        </div>
+
+        <footer style="text-align: center; font-size: 0.8rem; color: #444; margin-top: 50px;">
+            ironweil © 2025<br>
+            everything is going to be okay.
+        </footer>
+
+    </div>
+
+</body>
+</html>
